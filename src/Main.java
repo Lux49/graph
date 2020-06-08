@@ -9,6 +9,7 @@ public class Main {
         g1.KanteZiehen(2,3);
         g1.KanteZiehen(0,1);
         g1.KanteZiehen(1,0);
+        g1.KanteZiehen(3,2);
 
         //g1.Ausgeben();
         g1.AusgebenAlsTabelle();
