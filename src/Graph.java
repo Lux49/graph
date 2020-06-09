@@ -41,7 +41,6 @@ public class Graph {
         // Immer wieder obersten Knoten vom Stack nehmen
         while(!St.empty()){
             aktuellerKnoten = St.pop();
-            System.out.println(aktuellerKnoten);
 
             // Wenn aktueller Knoten noch nicht marktiert ist
             if(!markiert[aktuellerKnoten]){
