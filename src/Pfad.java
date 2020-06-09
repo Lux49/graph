@@ -20,7 +20,8 @@ public class Pfad {
         int i = 0;
         System.out.print("Pfad: ");
         while (i < Liste.size()){
-            System.out.print(Liste.get(1));
+            System.out.print(Liste.get(i) + ", ");
+            i++;
         }
         System.out.println();
     }
