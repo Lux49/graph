@@ -1,6 +1,6 @@
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.Arrays;
 
 public class Graph {
 
@@ -57,7 +57,50 @@ public class Graph {
                     if(IstKanteVorhanden(aktuellerKnoten, i)){
                         // dann lege diesen Knoten auf den Stack
                         St.add(i);
-                        // Speichere den Vorgäner des aktuellen Knotens, damit
+                        // Speichere den Vorgänger des aktuellen Knotens, damit
+                        // wir später wissen, wie wir hier her gekommen sind
+                        if (vorgänger[i] == -1) vorgänger[i] = aktuellerKnoten;
+                    }
+                }
+            }
+        }
+        throw new RuntimeException("Kein Weg vorhanden!");
+
+    }
+
+    public Pfad Breitensuche(int start, int ziel){
+        LinkedList<Integer> Warteschlange = new LinkedList<Integer>();
+        boolean [] markiert = new boolean[adj.length];
+        int [] vorgänger = new int[adj.length];
+        // alle Werte im Vorgänger Array af -1 setzen
+        Arrays.fill(vorgänger, -1);
+
+        // Warteschlange mit Startknoten bestücken
+        Warteschlange.addLast(start);
+
+        int aktuellerKnoten;
+
+        // Immer wieder obersten Knoten vom Stack nehmen
+        //while(!(List.size() > 0)){
+        while(!Warteschlange.isEmpty()){
+            aktuellerKnoten = Warteschlange.removeFirst();
+
+            // Wenn aktueller Knoten noch nicht marktiert ist
+            if(!markiert[aktuellerKnoten]){
+                // Markieren und weiter im Text
+                markiert[aktuellerKnoten] = true;
+
+                if(aktuellerKnoten == ziel){
+                    return BauePfadAusVorgängerArray(vorgänger, ziel);
+                }
+
+                // Jeden Nachfolger überprüfen
+                for(int i = 0; i < adj.length; i++){
+                    // Wenn es Kante von aktuellem Knoten zu diesem Knoten gibt
+                    if(IstKanteVorhanden(aktuellerKnoten, i)){
+                        // dann hänge diesen hinten an die Warteschlange an
+                        Warteschlange.addLast(i);
+                        // Speichere den Vorgänger des aktuellen Knotens, damit
                         // wir später wissen, wie wir hier her gekommen sind
                         if (vorgänger[i] == -1) vorgänger[i] = aktuellerKnoten;
                     }
