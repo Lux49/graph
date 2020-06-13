@@ -48,7 +48,7 @@ public class Graph {
                 markiert[aktuellerKnoten] = true;
 
                 if(aktuellerKnoten == ziel){
-                    return BauePfadAusVorgängerArray(vorgänger, ziel);
+                    return BauePfadAusVorgängerArray(vorgänger, ziel, false);
                 }
 
                 // Jeden Nachfolger überprüfen
@@ -56,7 +56,9 @@ public class Graph {
                     // Wenn es Kante von aktuellem Knoten zu diesem Knoten gibt
                     if(IstKanteVorhanden(aktuellerKnoten, i)){
                         // dann lege diesen Knoten auf den Stack
-                        St.add(i);
+                        if((markiert[i] == false) && (i != ziel)){
+                            St.add(i);
+                        }
                         // Speichere den Vorgänger des aktuellen Knotens, damit
                         // wir später wissen, wie wir hier her gekommen sind
                         if (vorgänger[i] == -1) vorgänger[i] = aktuellerKnoten;
@@ -72,18 +74,14 @@ public class Graph {
         LinkedList<Integer> Warteschlange = new LinkedList<Integer>();
         boolean [] markiert = new boolean[adj.length];
         int [] vorgänger = new int[adj.length];
-        // alle Werte im Vorgänger Array af -1 setzen
         Arrays.fill(vorgänger, -1);
 
-        // Warteschlange mit Startknoten bestücken
-        Warteschlange.addLast(start);
+        Warteschlange.addFirst(start);
 
         int aktuellerKnoten;
 
-        // Immer wieder obersten Knoten vom Stack nehmen
-        //while(!(List.size() > 0)){
         while(!Warteschlange.isEmpty()){
-            aktuellerKnoten = Warteschlange.removeFirst();
+            aktuellerKnoten = Warteschlange.removeLast();
 
             // Wenn aktueller Knoten noch nicht marktiert ist
             if(!markiert[aktuellerKnoten]){
@@ -91,18 +89,20 @@ public class Graph {
                 markiert[aktuellerKnoten] = true;
 
                 if(aktuellerKnoten == ziel){
-                    return BauePfadAusVorgängerArray(vorgänger, ziel);
+                    return BauePfadAusVorgängerArray(vorgänger, ziel, true);
                 }
 
                 // Jeden Nachfolger überprüfen
                 for(int i = 0; i < adj.length; i++){
                     // Wenn es Kante von aktuellem Knoten zu diesem Knoten gibt
                     if(IstKanteVorhanden(aktuellerKnoten, i)){
-                        // dann hänge diesen hinten an die Warteschlange an
-                        Warteschlange.addLast(i);
-                        // Speichere den Vorgänger des aktuellen Knotens, damit
-                        // wir später wissen, wie wir hier her gekommen sind
-                        if (vorgänger[i] == -1) vorgänger[i] = aktuellerKnoten;
+                        if((markiert[i] == false) && (i != start)){
+                            // dann hänge diesen hinten an die Warteschlange an
+                            Warteschlange.addFirst(i);
+                            // Speichere den Vorgänger des aktuellen Knotens, damit
+                            // wir später wissen, wie wir hier her gekommen sind
+                            if (vorgänger[i] == -1) vorgänger[i] = aktuellerKnoten;
+                        }
                     }
                 }
             }
@@ -111,12 +111,19 @@ public class Graph {
 
     }
 
-    public Pfad BauePfadAusVorgängerArray(int[] vorgänger, int ziel) {
+    public Pfad BauePfadAusVorgängerArray(int[] vorgänger, int ziel, boolean reverse) {
         Pfad p = new Pfad();
         int aktuellerKnoten = ziel;
         while (aktuellerKnoten != -1){
-            p.VorneHinzufügen(aktuellerKnoten);
-            aktuellerKnoten = vorgänger[aktuellerKnoten];
+            if (reverse == true){
+                p.VorneHinzufügen(aktuellerKnoten);
+                System.out.println("Vorne an Pfad angefügt: " + aktuellerKnoten);
+                aktuellerKnoten = vorgänger[aktuellerKnoten];
+            } else {
+                p.HintenHinzufügen(aktuellerKnoten);
+                System.out.println("Hinten an Pfad angefügt: " + aktuellerKnoten);
+                aktuellerKnoten = vorgänger[aktuellerKnoten];
+            }
         }
         return p;
     }
