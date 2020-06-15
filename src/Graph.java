@@ -48,6 +48,8 @@ public class Graph {
                 markiert[aktuellerKnoten] = true;
 
                 if(aktuellerKnoten == ziel){
+                    System.out.println("Weg von " + start + " zu " + ziel + " gefunden!");
+                    System.out.println("Generiere Pfad aus Vorgänger-Array …");
                     return BauePfadAusVorgängerArray(vorgänger, ziel, false);
                 }
 
@@ -56,9 +58,7 @@ public class Graph {
                     // Wenn es Kante von aktuellem Knoten zu diesem Knoten gibt
                     if(IstKanteVorhanden(aktuellerKnoten, i)){
                         // dann lege diesen Knoten auf den Stack
-                        if((markiert[i] == false) && (i != ziel)){
-                            St.add(i);
-                        }
+                        St.add(i);
                         // Speichere den Vorgänger des aktuellen Knotens, damit
                         // wir später wissen, wie wir hier her gekommen sind
                         if (vorgänger[i] == -1) vorgänger[i] = aktuellerKnoten;
@@ -89,6 +89,8 @@ public class Graph {
                 markiert[aktuellerKnoten] = true;
 
                 if(aktuellerKnoten == ziel){
+                    System.out.println("Weg von " + start + " zu " + ziel + " gefunden!");
+                    System.out.println("Generiere Pfad aus Vorgänger-Array …");
                     return BauePfadAusVorgängerArray(vorgänger, ziel, true);
                 }
 
@@ -117,11 +119,11 @@ public class Graph {
         while (aktuellerKnoten != -1){
             if (reverse == true){
                 p.VorneHinzufügen(aktuellerKnoten);
-                System.out.println("Vorne an Pfad angefügt: " + aktuellerKnoten);
+                //System.out.println("Vorne an Pfad angefügt: " + aktuellerKnoten);
                 aktuellerKnoten = vorgänger[aktuellerKnoten];
             } else {
-                p.HintenHinzufügen(aktuellerKnoten);
-                System.out.println("Hinten an Pfad angefügt: " + aktuellerKnoten);
+                p.VorneHinzufügen(aktuellerKnoten);
+                //System.out.println("Vorne an Pfad angefügt: " + aktuellerKnoten);
                 aktuellerKnoten = vorgänger[aktuellerKnoten];
             }
         }
