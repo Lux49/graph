@@ -17,8 +17,12 @@ public class Main {
 
         g1.AusgebenAlsTabelle();
 
+        System.out.println("\nZuerst mit Tiefensuche");
         Pfad p = g1.Tiefensuche(0,5);
-        //Pfad p = g1.Breitensuche(0,5);
         p.Ausgeben();
+
+        System.out.println("\nDann mit Breitensuche");
+        Pfad q = g1.Breitensuche(0,5);
+        q.Ausgeben();
     }
 }

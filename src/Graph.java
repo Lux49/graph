@@ -50,7 +50,7 @@ public class Graph {
                 if(aktuellerKnoten == ziel){
                     System.out.println("Weg von " + start + " zu " + ziel + " gefunden!");
                     System.out.println("Generiere Pfad aus Vorgänger-Array …");
-                    return BauePfadAusVorgängerArray(vorgänger, ziel, false);
+                    return BauePfadAusVorgängerArray(vorgänger, ziel);
                 }
 
                 // Jeden Nachfolger überprüfen
@@ -91,7 +91,7 @@ public class Graph {
                 if(aktuellerKnoten == ziel){
                     System.out.println("Weg von " + start + " zu " + ziel + " gefunden!");
                     System.out.println("Generiere Pfad aus Vorgänger-Array …");
-                    return BauePfadAusVorgängerArray(vorgänger, ziel, true);
+                    return BauePfadAusVorgängerArray(vorgänger, ziel);
                 }
 
                 // Jeden Nachfolger überprüfen
@@ -113,19 +113,13 @@ public class Graph {
 
     }
 
-    public Pfad BauePfadAusVorgängerArray(int[] vorgänger, int ziel, boolean reverse) {
+    public Pfad BauePfadAusVorgängerArray(int[] vorgänger, int ziel) {
         Pfad p = new Pfad();
         int aktuellerKnoten = ziel;
         while (aktuellerKnoten != -1){
-            if (reverse == true){
-                p.VorneHinzufügen(aktuellerKnoten);
-                //System.out.println("Vorne an Pfad angefügt: " + aktuellerKnoten);
-                aktuellerKnoten = vorgänger[aktuellerKnoten];
-            } else {
-                p.VorneHinzufügen(aktuellerKnoten);
-                //System.out.println("Vorne an Pfad angefügt: " + aktuellerKnoten);
-                aktuellerKnoten = vorgänger[aktuellerKnoten];
-            }
+            p.VorneHinzufügen(aktuellerKnoten);
+            //System.out.println("Vorne an Pfad angefügt: " + aktuellerKnoten);
+            aktuellerKnoten = vorgänger[aktuellerKnoten];
         }
         return p;
     }
